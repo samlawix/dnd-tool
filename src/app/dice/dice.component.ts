@@ -3,6 +3,7 @@ import {
   OnInit
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DiceService } from '../share/service/dice.service';
 
 @Component({
   selector: 'dice',
@@ -14,7 +15,8 @@ export class DiceComponent implements OnInit {
 
   public localState: any;
   constructor(
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private diceService: DiceService,
   ) {}
 
   public ngOnInit() {
@@ -35,6 +37,8 @@ export class DiceComponent implements OnInit {
      * if you're working with mock data you can also use http.get('assets/mock-data/mock-data.json')
      */
     this.asyncDataWithWebpack();
+
+    this.diceService.getMessage();
   }
   private asyncDataWithWebpack() {
     /**
