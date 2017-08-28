@@ -6,5 +6,6 @@ export class RollLog {
   public diceFace: number;
   public adjustment: number;
   public diceResult: number[];
+  public sum: number;
   public time: Date;
 }

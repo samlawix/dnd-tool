@@ -1,16 +1,20 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  OnDestroy
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   FormControl,
   FormGroup,
-  FormBuilder
+  FormBuilder,
+  Validators
 } from '@angular/forms';
 
 import { RollLog } from './data-model/RollLog';
 import { RollSubmission } from './data-model/RollSubmission';
+import { UserList } from './data-model/UserList';
+
 import { DiceService } from '../share/service/dice.service';
 
 @Component({
@@ -20,7 +24,7 @@ import { DiceService } from '../share/service/dice.service';
   ],
   templateUrl: './dice.component.html'
 })
-export class DiceComponent implements OnInit {
+export class DiceComponent implements OnInit, OnDestroy {
 
   public localState: any;
   public username: string;
@@ -28,14 +32,15 @@ export class DiceComponent implements OnInit {
   public isLoginDialogVisible: boolean;
 
   public RollSubmitForm: FormGroup;
-  public RollSubmitObject: RollSubmission = {
-    name: '',
-    reason: '',
-    noOfDice: '',
-    diceFace: '',
-    adjustment: ''
-  }
-  public userList: string[];
+  public RollSubmitFormGroup = {
+    name : ['', Validators.required ],
+    reason : ['', Validators.required ],
+    noOfDice : ['', Validators.required ],
+    diceFace : ['', Validators.required ],
+    adjustment : ['', Validators.required ]
+  };
+  public userList: UserList[];
+  public rollLogList: RollLog[];
 
   constructor(
       public route: ActivatedRoute,
@@ -52,6 +57,8 @@ export class DiceComponent implements OnInit {
     if(this.username.length !== 0){
       localStorage.setItem('username', this.username);
       this.isLoginDialogVisible = false;
+
+      this.diceService.sendMessage('registerUser', this.username);
     }
   }
 
@@ -60,53 +67,45 @@ export class DiceComponent implements OnInit {
   }
 
   public createRollForm(){
-    this.RollSubmitForm = this.formBuilder.group(this.RollSubmitObject);
+    this.RollSubmitForm = this.formBuilder.group(this.RollSubmitFormGroup);
+    // this.RollSubmitForm.valid
+  }
+
+  public submitRoll(){
+    this.diceService.sendMessage('submitDiceRoll', this.RollSubmitForm.value);
+  }
+
+  public initSocketEvents(){
+    this.diceService.getMessage('userListUpdate').subscribe((res) => {
+      // console.log(res);
+      this.userList = res;
+    });
+    this.diceService.getMessage('rollLogUpdate').subscribe((res: RollLog[]) => {
+      let _rollLog = res.reverse();
+      // console.log(res);
+      this.rollLogList = _rollLog;
+    });
   }
 
   public ngOnInit() {
+    this.initSocketEvents();
     // Block if user not logged in
     if(!localStorage.getItem('username')){
       this.isLoginDialogVisible = true;
     } else {
       this.isLoginDialogVisible = false;
       this.username = localStorage.getItem('username');
+
+      this.diceService.sendMessage('registerUser', this.username);
     }
 
-    this.route
-      .data
-      .subscribe((data: any) => {
-        /**
-         * Your resolved data from route.
-         */
-        this.localState = data.yourData;
-      });
-
-    console.log('hello `About` component');
-    /**
-     * static data that is bundled
-     * var mockData = require('assets/mock-data/mock-data.json');
-     * console.log('mockData', mockData);
-     * if you're working with mock data you can also use http.get('assets/mock-data/mock-data.json')
-     */
-    // this.asyncDataWithWebpack();
-
-    this.diceService.sendMessage('aaa');
+    // this.diceService.sendMessage('aaa');
   }
-  // private asyncDataWithWebpack() {
-  //   /**
-  //    * you can also async load mock data with 'es6-promise-loader'
-  //    * you would do this if you don't want the mock-data bundled
-  //    * remember that 'es6-promise-loader' is a promise
-  //    */
-  //   setTimeout(() => {
 
-  //     System.import('../../assets/mock-data/mock-data.json')
-  //       .then((json) => {
-  //         console.log('async mockData', json);
-  //         this.localState = json;
-  //       });
-
-  //   });
-  // }
+  public ngOnDestroy() {
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
+    this.diceService.close();
+  }
 
 }

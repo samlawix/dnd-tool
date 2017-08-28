@@ -10,17 +10,15 @@ export class DiceService {
       private socket: Socket
     ) { }
 
-    public sendMessage(msg: string){
-        this.socket.emit('message', msg);
+    public sendMessage(msg: string, payload: any = null){
+        this.socket.emit(msg, payload);
     }
 
-    public getMessage() {
-        return this.socket
-            .fromEvent<any>('message')
-            .map(data => data.msg );
+    public getMessage(msg: string) {
+        return this.socket.fromEvent<any>(msg);
     }
 
     public close() {
-      this.socket.disconnect()
+      this.socket.disconnect();
     }
 }

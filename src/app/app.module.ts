@@ -81,10 +81,10 @@ type StoreType = {
 
     // Primeng import
     MenuModule,
+    SocketIoModule.forRoot(socketIoConfig),
   ],
   exports: [
-    XLargeDirective,
-    SocketIoModule.forRoot(socketIoConfig),
+    XLargeDirective
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.

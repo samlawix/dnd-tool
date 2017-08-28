@@ -11,6 +11,9 @@ import {
   DialogModule,
   InputTextModule,
   ButtonModule,
+  DataTableModule,
+  SharedModule,
+  DataListModule,
 } from 'primeng/primeng';
 
 import { routes } from './dice.routes';
@@ -35,6 +38,10 @@ console.log('`Detail` bundle loaded asynchronously');
     DialogModule,
     InputTextModule,
     ButtonModule,
+    DataTableModule,
+    SharedModule,
+    DataListModule,
+
   ],
   providers: [
     FormBuilder

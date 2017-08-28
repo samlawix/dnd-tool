@@ -3,7 +3,7 @@
   <span *ngIf='username!==""'>Welcome, {{username}}</span>
 </div>
 <div class='rollInput'>
-  <form [formGroup]="RollSubmitForm" id="rollSubmitForm" novalidate>
+  <form (ngSubmit)="submitRoll()" [formGroup]="RollSubmitForm" id="rollSubmitForm" novalidate>
     <div class="form-group">
       <label>Name:
         <input pInputText class="form-control" formControlName="name">
@@ -21,13 +21,20 @@
         <input pInputText class="form-control" formControlName="adjustment">
       </label>
     </div>
+    <button pButton type="submit" label="Roll!" [disabled]="RollSubmitForm.status!=='VALID'"></button>
   </form>
 </div>
 <div class='rollLog'>
-
+<p-dataList [value]="rollLogList">
+  <ng-template let-rollLog pTemplate="item">
+    {{rollLog.name}} ({{rollLog.name}}) roll for "{{rollLog.reason}}", yielding "{{rollLog.diceResult.join(', ')}}" with a total of {{rollLog.sum}}
+  </ng-template>
+</p-dataList>
 </div>
 <div class='userList'>
-
+  <p-dataTable [value]="userList">
+    <p-column field="name" header="Logged In User"></p-column>
+  </p-dataTable>
 </div>
 
 <div class='clear'></div>
