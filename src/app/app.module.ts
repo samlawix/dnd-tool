@@ -30,6 +30,11 @@ import {
   DialogModule,
 } from 'primeng/primeng';
 
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+const socketIoConfig: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
+
+import { DiceService } from './share/service/dice.service';
+
 // App is our top level component
 import { AppComponent } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
@@ -72,6 +77,7 @@ type StoreType = {
     FormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
+<<<<<<< HEAD
     BrowserAnimationsModule,
 
     // Primeng import
@@ -79,13 +85,17 @@ type StoreType = {
   ],
   exports: [
     XLargeDirective
+=======
+    SocketIoModule.forRoot(socketIoConfig),
+>>>>>>> 3554fbe8455d26d379f7a50d7f6de1bcc9bea7fd
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.
    */
   providers: [
     ENV_PROVIDERS,
-    APP_PROVIDERS
+    APP_PROVIDERS,
+    DiceService
   ]
 })
 export class AppModule {

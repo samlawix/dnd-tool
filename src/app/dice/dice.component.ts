@@ -3,6 +3,7 @@ import {
   OnInit
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+<<<<<<< HEAD
 import {
   FormControl,
   FormGroup,
@@ -11,6 +12,9 @@ import {
 
 import { RollLog } from './data-model/RollLog';
 import { RollSubmission } from './data-model/RollSubmission';
+=======
+import { DiceService } from '../share/service/dice.service';
+>>>>>>> 3554fbe8455d26d379f7a50d7f6de1bcc9bea7fd
 
 @Component({
   selector: 'dice',
@@ -21,6 +25,7 @@ import { RollSubmission } from './data-model/RollSubmission';
 })
 export class DiceComponent implements OnInit {
 
+<<<<<<< HEAD
   public localState: any;
   public username: string;
 
@@ -77,6 +82,25 @@ export class DiceComponent implements OnInit {
          */
         this.localState = data.yourData;
       });
+=======
+  public userList: string[];
+  // public localState: any;
+
+  constructor(
+    public route: ActivatedRoute,
+    private diceService: DiceService,
+  ) {}
+
+  public ngOnInit() {
+    // this.route
+    //   .data
+    //   .subscribe((data: any) => {
+    //     /**
+    //      * Your resolved data from route.
+    //      */
+    //     this.localState = data.yourData;
+    //   });
+>>>>>>> 3554fbe8455d26d379f7a50d7f6de1bcc9bea7fd
 
     console.log('hello `About` component');
     /**
@@ -85,23 +109,25 @@ export class DiceComponent implements OnInit {
      * console.log('mockData', mockData);
      * if you're working with mock data you can also use http.get('assets/mock-data/mock-data.json')
      */
-    this.asyncDataWithWebpack();
-  }
-  private asyncDataWithWebpack() {
-    /**
-     * you can also async load mock data with 'es6-promise-loader'
-     * you would do this if you don't want the mock-data bundled
-     * remember that 'es6-promise-loader' is a promise
-     */
-    setTimeout(() => {
+    // this.asyncDataWithWebpack();
 
-      System.import('../../assets/mock-data/mock-data.json')
-        .then((json) => {
-          console.log('async mockData', json);
-          this.localState = json;
-        });
-
-    });
+    this.diceService.sendMessage('aaa');
   }
+  // private asyncDataWithWebpack() {
+  //   /**
+  //    * you can also async load mock data with 'es6-promise-loader'
+  //    * you would do this if you don't want the mock-data bundled
+  //    * remember that 'es6-promise-loader' is a promise
+  //    */
+  //   setTimeout(() => {
+
+  //     System.import('../../assets/mock-data/mock-data.json')
+  //       .then((json) => {
+  //         console.log('async mockData', json);
+  //         this.localState = json;
+  //       });
+
+  //   });
+  // }
 
 }
