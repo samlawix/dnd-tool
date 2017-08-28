@@ -77,17 +77,14 @@ type StoreType = {
     FormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
-<<<<<<< HEAD
     BrowserAnimationsModule,
 
     // Primeng import
     MenuModule,
   ],
   exports: [
-    XLargeDirective
-=======
+    XLargeDirective,
     SocketIoModule.forRoot(socketIoConfig),
->>>>>>> 3554fbe8455d26d379f7a50d7f6de1bcc9bea7fd
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.
