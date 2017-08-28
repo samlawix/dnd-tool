@@ -30,7 +30,7 @@ import {
  } from 'primeng/primeng';
 
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
-const socketIoConfig: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const socketIoConfig: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
 
 import { DiceService } from './share/service/dice.service';
 
