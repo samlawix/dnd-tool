@@ -3,21 +3,72 @@ import {
   OnInit
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {
+  FormControl,
+  FormGroup,
+  FormBuilder
+} from '@angular/forms';
+
+import { RollLog } from './data-model/RollLog';
+import { RollSubmission } from './data-model/RollSubmission';
 
 @Component({
   selector: 'dice',
-  styles: [`
-  `],
+  styleUrls: [
+    './dice.component.css'
+  ],
   templateUrl: './dice.component.html'
 })
 export class DiceComponent implements OnInit {
 
   public localState: any;
+  public username: string;
+
+  public isLoginDialogVisible: boolean;
+
+  public RollSubmitForm: FormGroup;
+  public RollSubmitObject: RollSubmission = {
+    name: '',
+    reason: '',
+    noOfDice: '',
+    diceFace: '',
+    adjustment: ''
+  }
+
   constructor(
-    public route: ActivatedRoute
-  ) {}
+    public route: ActivatedRoute,
+    private formBuilder: FormBuilder
+  ) {
+    this.isLoginDialogVisible = false;
+    this.username = '';
+
+    this.createRollForm();
+  }
+
+  public checkLogin() {
+    if(this.username.length !== 0){
+      localStorage.setItem('username', this.username);
+      this.isLoginDialogVisible = false;
+    }
+  }
+
+  public isConfirmButtonDisabled(){
+    return (this.username === '') ? true : false;
+  }
+
+  public createRollForm(){
+    this.RollSubmitForm = this.formBuilder.group(this.RollSubmitObject);
+  }
 
   public ngOnInit() {
+    // Block if user not logged in
+    if(!localStorage.getItem('username')){
+      this.isLoginDialogVisible = true;
+    } else {
+      this.isLoginDialogVisible = false;
+      this.username = localStorage.getItem('username');
+    }
+
     this.route
       .data
       .subscribe((data: any) => {

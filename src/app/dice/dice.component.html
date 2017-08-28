@@ -1,7 +1,39 @@
-<h1>Dice Rolling Tool</h1>
+<h1 x-large class="sample-content">Dice Rolling Tool</h1>
+<div class='infoBar'>
+  <span *ngIf='username!==""'>Welcome, {{username}}</span>
+</div>
 <div class='rollInput'>
-
+  <form [formGroup]="RollSubmitForm" id="rollSubmitForm" novalidate>
+    <div class="form-group">
+      <label>Name:
+        <input pInputText class="form-control" formControlName="name">
+      </label>
+      <label>Reason:
+        <input pInputText class="form-control" formControlName="reason">
+      </label>
+      <label>Number of Dice:
+        <input pInputText class="form-control" formControlName="noOfDice">
+      </label>
+      <label>Dice Face:
+        <input pInputText class="form-control" formControlName="diceFace">
+      </label>
+      <label>Adjustment:
+        <input pInputText class="form-control" formControlName="adjustment">
+      </label>
+    </div>
+  </form>
 </div>
 <div class='rollLog'>
 
 </div>
+<div class='userList'>
+
+</div>
+
+<div class='clear'></div>
+
+<p-dialog header="Login" modal="true" closeOnEscape="false" closable="false" [(visible)]="isLoginDialogVisible">
+  Please input your player name:
+  <input type="text" pInputText name="username" [(ngModel)]="username" />
+  <button pButton type="button" label="Login" (click)='checkLogin()' [disabled]="isConfirmButtonDisabled()"></button>
+</p-dialog>

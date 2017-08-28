@@ -1,0 +1,22 @@
+.rollInput{
+  width:100%;
+  /* min-height: */
+}
+
+.rollLog{
+  width:70%;
+}
+
+.userList{
+  width:30%;
+}
+
+.clear{
+  clear: both;
+}
+
+#rollSubmitForm label {
+
+    display: block;
+    margin: 10px 0;
+}

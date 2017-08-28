@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   NgModule,
   ApplicationRef
@@ -26,8 +27,8 @@ import { ROUTES } from './app.routes';
  */
 import {
   MenuModule,
-  MenuItem,
- } from 'primeng/primeng';
+  DialogModule,
+} from 'primeng/primeng';
 
 // App is our top level component
 import { AppComponent } from './app.component';
@@ -71,6 +72,13 @@ type StoreType = {
     FormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules }),
+    BrowserAnimationsModule,
+
+    // Primeng import
+    MenuModule,
+  ],
+  exports: [
+    XLargeDirective
   ],
   /**
    * Expose our Services and Providers into Angular's dependency injection.

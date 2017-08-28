@@ -7,6 +7,11 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+import {
+  MenuModule,
+  MenuItem,
+} from 'primeng/primeng';
+
 import { AppState } from './app.service';
 import { RouterModule, RouterStateSnapshot, Router } from '@angular/router';
 /**
@@ -17,14 +22,19 @@ import { RouterModule, RouterStateSnapshot, Router } from '@angular/router';
   selector: 'app',
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
-    './app.component.css'
+    './app.component.css',
+    '../../node_modules/primeng/resources/primeng.min.css',
+    '../../node_modules/primeng/resources/themes/omega/theme.css'
   ],
   templateUrl: './app.component.html'
 })
+
 export class AppComponent implements OnInit {
   public angularclassLogo = 'assets/img/angularclass-avatar.png';
   public name = 'Angular 2 Webpack Starter';
   public url = 'https://twitter.com/AngularClass';
+
+  public menuItems: MenuItem[];
 
   constructor(
     public appState: AppState,
@@ -32,6 +42,20 @@ export class AppComponent implements OnInit {
   ) {}
 
   public ngOnInit() {
+
+    this.menuItems = [
+      {
+        label: 'Home',
+        icon: 'fa-home',
+        routerLink: ['/home'],
+      },
+      {
+        label: 'Dice Tool',
+        icon: 'fa-list',
+        routerLink: ['/dice'],
+      }
+    ];
+
     console.log('Initial App State', this.appState.state);
   }
 
